@@ -13,7 +13,6 @@ const sendToken = (req, res, next) => {
   });
 };
 
-// eslint-disable-next-line consistent-return
 const verifyToken = (req, res, next) => {
   let token = null;
   const bearerHeader = req.headers.authorization;
@@ -26,14 +25,16 @@ const verifyToken = (req, res, next) => {
     // set the token
     token = bearerToken;
   } else {
-    return next(new AuthorizationError('Did not receive token'));
+    next(new AuthorizationError('Did not receive token'));
+    return;
   }
 
   jwt.verify(token, process.env.SECRET, (err) => {
     if (err) {
-      return next(new AuthorizationError('Token Invalid. Forbidden!'));
+      next(new AuthorizationError('Token Invalid. Forbidden!'));
+      return;
     }
-    return next();
+    next();
   });
 };
 

@@ -9,10 +9,11 @@ const {
 const login = (req, res, next) => {
   const { error, value } = ValidateLogin.validate(req.body);
   if (error) {
-    return next(new ValidationError('Inputs do not meet criteria'));
+    next(new ValidationError('Inputs do not meet criteria'));
+    return;
   }
   req.parsed = value;
-  return next();
+  next();
 };
 
 module.exports = {
