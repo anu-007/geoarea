@@ -45,12 +45,14 @@ app.use(limiter);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
+const version = 'v1';
+
 // Router Initialization
-app.get('/v1', (req, res) => {
+app.get(`/${version}`, (req, res) => {
   res.status(200).json({
     msg: 'Welcome to geo area calculator',
   });
 });
-app.use('/v1/user', users);
+app.use(`/${version}/user`, users);
 
 module.exports = app;
