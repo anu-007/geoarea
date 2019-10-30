@@ -13,6 +13,7 @@ const UserSchema = new Schema({
   lastUpdateAt: { type: Date, default: Date.now },
 });
 
+// eslint-disable-next-line func-names
 UserSchema.post('save', function () {
   const data = this;
   data.lastUpdateAt = new Date();

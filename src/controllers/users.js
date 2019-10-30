@@ -25,19 +25,22 @@ const login = async (req, res, next) => {
   try {
     foundUser = await User.findOne({ username });
   } catch (error) {
-    return next(new DatabaseError('Error getting user info'));
+    next(new DatabaseError('Error getting user info'));
+    return;
   }
 
   try {
     isMatch = await bcrypt.compare(password, foundUser.password);
   } catch (error) {
-    return next(new PermissionError('Wrong password'));
+    next(new PermissionError('Wrong password'));
+    return;
   }
 
   if (foundUser === null || !isMatch) {
-    return next(new NotFoundError('Username or password do not match'));
+    next(new NotFoundError('Username or password do not match'));
+    return;
   }
-  return next();
+  next();
 };
 
 // Area controller
@@ -55,13 +58,15 @@ const getAreas = async (req, res, next) => {
       },
     ]);
   } catch (error) {
-    return next(new DatabaseError('Error getting areas'));
+    next(new DatabaseError('Error getting areas'));
+    return;
   }
 
   if (!areas) {
-    return next(new NotFoundError('No record found'));
+    next(new NotFoundError('No record found'));
+    return;
   }
-  return res.status(200).json({
+  res.status(200).json({
     data: areas,
   });
 };
@@ -79,7 +84,8 @@ const getSegments = async (req, res, next) => {
       },
     ]);
   } catch (error) {
-    return next(new DatabaseError('Error getting segments'));
+    next(new DatabaseError('Error getting segments'));
+    return;
   }
 
   switch (req.query.q) {
@@ -103,9 +109,10 @@ const getSegments = async (req, res, next) => {
   }
 
   if (!segments) {
-    return next(new NotFoundError('No record found'));
+    next(new NotFoundError('No record found'));
+    return;
   }
-  return res.status(200).json({
+  res.status(200).json({
     data: segments,
   });
 };

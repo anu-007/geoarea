@@ -2,6 +2,20 @@
 ---
 #### _Gets area, centroid, and center of mass of a given area segment_
 
+## Start Service
+
+### API Server
+
+```bash
+> npm start
+```
+Using nodemon to start development server
+
+```bash
+> npm i -g nodemon
+> nodemon bin/www
+```
+
 ### deployed URL
 [geoinfo](https://geo-info.herokuapp.com/v1/user)
 
